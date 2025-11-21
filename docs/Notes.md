@@ -31,6 +31,12 @@ First come up with a dirty code at first. (a little CI)
 - CI: github action
 - CD: dockers
 
+11/20
+1. Plan the schema
+
+
 
 ## Problems
-
+1. Where do I start ? 
+start developing with the backend because I have to define the functions that I want to have for the frontend to connect, and you also need to have the database schema setup.
+Start with SQLite and then migrate to postgreSQL with docker, because postgre has to be set up as a server and sqlite is already builtin in python.
