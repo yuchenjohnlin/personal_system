@@ -33,6 +33,8 @@ First come up with a dirty code at first. (a little CI)
 
 11/20
 1. Plan the schema
+2. Define functionalities of the project
+
 
 
 
@@ -40,3 +42,10 @@ First come up with a dirty code at first. (a little CI)
 1. Where do I start ? 
 start developing with the backend because I have to define the functions that I want to have for the frontend to connect, and you also need to have the database schema setup.
 Start with SQLite and then migrate to postgreSQL with docker, because postgre has to be set up as a server and sqlite is already builtin in python.
+
+## Journal
+> 11/20
+> 
+> [Plan database schema](../backend/db/plan.md)  
+> write SQLAlchemy for it
+> 
