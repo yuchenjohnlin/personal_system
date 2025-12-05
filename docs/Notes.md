@@ -35,6 +35,39 @@ First come up with a dirty code at first. (a little CI)
 1. Plan the schema
 2. Define functionalities of the project
 
+11/21 
+Create backend and Frontend to make it work
+
+your-project/
+│
+├── backend/
+│   ├── app/
+│   │   ├── main.py
+│   │   ├── api/
+│   │   │   ├── expenses.py
+│   │   │   ├── purchases.py
+│   │   │   └── __init__.py
+│   │   ├── db/
+│   │   │   ├── database.py
+│   │   │   ├── models.py
+│   │   │   └── __init__.py
+│   │   ├── schemas/
+│   │   │   ├── expenses.py
+│   │   │   └── __init__.py
+│   │   └── __init__.py
+│   ├── poetry.lock / requirements.txt
+│   └── venv/ (optional)
+│
+└── frontend/
+    ├── src/
+    │   ├── App.tsx
+    │   ├── components/
+    │   │   └── ExpenseForm.tsx
+    │   └── pages/
+    ├── package.json
+    └── vite.config.ts
+
+
 
 
 
@@ -43,9 +76,22 @@ First come up with a dirty code at first. (a little CI)
 start developing with the backend because I have to define the functions that I want to have for the frontend to connect, and you also need to have the database schema setup.
 Start with SQLite and then migrate to postgreSQL with docker, because postgre has to be set up as a server and sqlite is already builtin in python.
 
+2. How should I test the backend ?
+After having backend APIs, should use unit tests like pytest or FastAPI TestClients  
+I can first build the frontend so that I have a full structure and then later on I will start deploying so that I can do CI/CD.
+
+3.
+
 ## Journal
 > 11/20
 > 
-> [Plan database schema](../backend/db/plan.md)  
+> [Plan database schema](database.md)  
 > write SQLAlchemy for it
-> 
+
+> 11/21
+> [Backend Setup](backend.md) - Have the backend apis written  
+> Although I should test the backend with self-written tests but I think I can first develop the frontend because I have to develop it anyways  
+> [Frontend Setup](frontend.md) - Need a frontend to trigger the backend
+
+> 11/28
+> Continue [Frontend Development](frontend.md) 

@@ -100,3 +100,143 @@ Best practice: keep one numeric column and add a “what this number means” co
 from backend.db.database import Base
 from eralchemy2 import render_er
 render_er(Base, "schema.png")
+
+11/21 
+## Understand sessions, how to use SQLAlchemy db and how to connect to FastAPI
+### What does init_db() do?
+This does TWO things:
+✔ A. Creates a database engine
+
+→ The connection to SQLite
+
+✔ B. Creates all tables defined in your SQLAlchemy models
+
+Base.metadata.create_all(engine) reads and generates SQL
+
+### What is SessionLocal?
+
+This creates a factory that makes DB sessions.
+
+Think of SessionLocal() like:
+
+"Create a temporary connection to the DB for this request."
+
+This is NOT the same as the engine.
+
+Engine
+
+→ global connection manager
+→ talks to the DB
+
+Session
+
+→ a transaction
+→ used to read/write rows
+→ opened per request
+→ closed after the request
+
+You never reuse a session.
+You always create a new one for each request.
+
+### What is a “session” in SQLAlchemy?
+The session manages:
+
+INSERT
+
+UPDATE
+
+DELETE
+
+QUERY
+
+transactions
+
+rollback
+
+connection lifetime
+
+Think of it like:
+
+“Open a transaction → do work → commit → close.”
+
+Why not use the engine directly?
+
+Because engine is not per-request safe.
+
+Only sessions have:
+
+automatic transaction commit
+
+rollback on error
+
+multiple objects tracking
+
+concurrency handling
+
+identity map (prevents duplicate objects)
+
+Using the engine directly gives you unsafe code.
+
+### How FastAPI uses the session
+You use the dependency from SQLAlchemy
+
+FastAPI does the following in a route:
+
+Call SessionLocal() → create session
+
+Pass db into your route
+
+Your route uses db.add(...), db.commit()
+
+After route finishes → session automatically .close()
+
+It ensures:
+
+no open connections left behind
+
+concurrency safety
+
+clean transaction boundaries
+
+### ⭐ FINAL SUMMARY
+Engine
+
+Global connection manager
+
+Talks to SQLite
+
+Lives for the whole app lifetime
+
+SessionLocal
+
+A factory that creates one session per request
+
+Manages transactions
+
+Handles add/commit/rollback/query
+
+Always closed at end of request
+
+init_db()
+
+Creates the tables
+
+Ensures foreign keys work
+
+Creates the database file
+
+Middleware
+
+CORS settings so frontend can call backend
+
+Pydantic Classes
+
+Validate inputs
+
+Define what API accepts
+
+Separate API schema from DB schema
+
+Prevent unsafe or incorrect data
+
+Everything in your setup is following professional-level FastAPI architecture.
