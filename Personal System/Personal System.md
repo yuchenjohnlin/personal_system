@@ -1,4 +1,4 @@
-# Goal
+# Ultimate Goal
 1. Understand the development flow of designing an APP 
 	[[#Product Design]]
 	[[My thoughts]]

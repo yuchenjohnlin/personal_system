@@ -1,5 +1,6 @@
 import { PurchaseCard } from "./PurchaseCard";
 import { AddPurchaseCard } from "./AddPurchaseCard";
+import "./PurchaseList.css";
 
 export function PurchaseList({
   purchases,
@@ -9,7 +10,7 @@ export function PurchaseList({
   onAddPurchase: () => void;
 }) {
   return (
-    <div>
+    <div className="purchase-list">
       {purchases.map((p) => (
         <PurchaseCard key={p.id} purchase={p} />
       ))}
@@ -18,3 +19,5 @@ export function PurchaseList({
     </div>
   );
 }
+
+export default PurchaseList

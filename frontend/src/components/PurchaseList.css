@@ -1,0 +1,4 @@
+.purchase-list {
+  display: grid;
+  gap: 12px;
+}

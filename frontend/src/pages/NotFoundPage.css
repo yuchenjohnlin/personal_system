@@ -1,0 +1,23 @@
+.not-found {
+  display: grid;
+  gap: 12px;
+}
+
+.not-found h1 {
+  margin: 0;
+}
+
+.not-found p {
+  margin: 0;
+  color: #475569;
+}
+
+.not-found a {
+  color: #0f172a;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.not-found a:hover {
+  text-decoration: underline;
+}

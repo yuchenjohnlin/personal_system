@@ -1,0 +1,14 @@
+.add-purchase {
+  padding: 16px;
+  margin-top: 12px;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #475569;
+  text-align: center;
+  border: 1px dashed #cbd5e1;
+}
+
+.add-purchase:hover {
+  background-color: #e2e8f0;
+}

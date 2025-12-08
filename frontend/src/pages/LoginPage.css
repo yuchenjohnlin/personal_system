@@ -1,0 +1,63 @@
+.login {
+  max-width: 420px;
+  margin: 0 auto;
+  display: grid;
+  gap: 16px;
+}
+
+.login__header {
+  display: grid;
+  gap: 4px;
+}
+
+.login__header h1 {
+  margin: 0;
+}
+
+.login__header p {
+  margin: 0;
+  color: #475569;
+}
+
+.login__form {
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.login__field {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.login__field input[type="email"],
+.login__field input[type="password"] {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+}
+
+.login__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.login__button {
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #0f172a;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.login__button:hover {
+  background: #111827;
+}

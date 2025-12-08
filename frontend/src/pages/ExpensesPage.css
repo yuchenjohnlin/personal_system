@@ -1,0 +1,33 @@
+.expenses {
+  display: grid;
+  gap: 20px;
+}
+
+.expenses__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.expenses__copy {
+  display: grid;
+  gap: 4px;
+}
+
+.expenses__copy h1 {
+  margin: 0;
+}
+
+.expenses__copy p {
+  margin: 0;
+  color: #475569;
+}
+
+.expenses__search {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  min-width: 240px;
+}
