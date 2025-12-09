@@ -6,17 +6,22 @@ import { apiUrl } from "../utils/api";
 
 function RegisterPage() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const passwordsMismatch =
+    password.length > 0 && confirmPassword.length > 0 && password !== confirmPassword;
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
+
+    if (passwordsMismatch) {
+      setError("Passwords do not match");
+      return;
+    }
     setIsLoading(true);
 
     fetch(apiUrl("/users"), {
@@ -24,14 +29,9 @@ function RegisterPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         credentials: {
-          username,
           email,
           password,
-        },
-        profile:
-          firstName || lastName
-            ? { first_name: firstName, last_name: lastName }
-            : undefined,
+        }
       }),
     })
       .then(async (res) => {
@@ -61,16 +61,6 @@ function RegisterPage() {
       </header>
       <form className="login__form" onSubmit={handleSubmit}>
         <label className="login__field">
-          <span>Username</span>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
-            required
-          />
-        </label>
-        <label className="login__field">
           <span>Email</span>
           <input
             type="email"
@@ -89,28 +79,24 @@ function RegisterPage() {
             required
           />
         </label>
-        <div className="login__name-row">
-          <label className="login__field">
-            <span>First name</span>
-            <input
-              type="text"
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              placeholder="Ada"
-            />
-          </label>
-          <label className="login__field">
-            <span>Last name</span>
-            <input
-              type="text"
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              placeholder="Lovelace"
-            />
-          </label>
-        </div>
+        <label className="login__field">
+          <span>Confirm password</span>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          {passwordsMismatch && (
+            <span className="login__hint login__hint--error">Passwords do not match</span>
+          )}
+        </label>
 
-        <button type="submit" className="login__button" disabled={isLoading}>
+        <button
+          type="submit"
+          className="login__button"
+          disabled={isLoading || passwordsMismatch}
+        >
           {isLoading ? "Creating..." : "Create account"}
         </button>
         {error && <p className="login__error">{error}</p>}

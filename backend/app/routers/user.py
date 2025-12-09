@@ -16,27 +16,30 @@ router = APIRouter(prefix="/users", tags=["Users"])
 @router.post("", response_model=UserOut)
 def create_user(payload: UserCreate, db: Session = Depends(get_db)):
     logger.info("create user : ", payload)
-    # Create base user 
+    # check uniqueness 
+    if db.query(UserCredential).filter_by(email=payload.credentials.email).first():
+        raise HTTPException(400, "Email already registered")
+
+    # simple password check
+    if payload.credentials.password.lower() in payload.credentials.email.lower():
+        raise HTTPException(400, "Password is too similar to email")
+    
+    hashed_passwd = hash_password(payload.credentials.password)
+    
+    # Create base user - this user in the model is not the credential
     user = User()
     db.add(user)
     db.flush()
-    logger.info("user : ", user)
-
-    # hashed_passwd = hash_password(payload.credentials.password)
 
     # create a python ORM object
     # the reason that we can't do something similar to **payload...dict
     # because the credentials payload has a password key which is not in the model
-
     cred = UserCredential(
         user_id=user.id,
-        username=payload.credentials.username,
         email=payload.credentials.email,
-        # password_hash=hashed_passwd,
-        password_hash=payload.credentials.password
+        password_hash=hashed_passwd,
     )
     db.add(cred)
-    logger.info("credentials : ", cred)
 
     # when FastAPI revceives JSON, it parses it to Pydantic Objects
     # but SQLAlchemy expects a dict to update fields 

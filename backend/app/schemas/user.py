@@ -1,12 +1,14 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field, validator
 
 
 class UserProfileCreate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
+    username: Optional[str] = None
+
     display_name: Optional[str] = None
     timezone: Optional[str] = None
     locale: Optional[str] = None
@@ -16,6 +18,8 @@ class UserProfileCreate(BaseModel):
 class UserProfileUpdate(BaseModel):
     first_name: Optional[str] = None
     last_name: Optional[str] = None
+    username: Optional[str] = None
+    
     display_name: Optional[str] = None
     timezone: Optional[str] = None
     locale: Optional[str] = None
@@ -27,6 +31,8 @@ class UserProfileOut(BaseModel):
     user_id: int
     first_name: Optional[str] = None
     last_name: Optional[str] = None
+    username: Optional[str] = None
+
     display_name: Optional[str] = None
     avatar_url: Optional[str] = None
     locale: Optional[str] = None
@@ -37,19 +43,24 @@ class UserProfileOut(BaseModel):
         orm_mode = True
 
 class UserCredentialCreate(BaseModel):
-    username: str
     email: EmailStr
-    password: str  # plaintext password from client
+    password: str = Field(min_length=8)  # plaintext password from client
+
+    @validator("password")
+    def validate_complexity(cls, v):
+        if not any(c.isdigit() for c in v):
+            raise ValueError("Password must contain at least one number")
+        if not any(c.isalpha() for c in v):
+            raise ValueError("Password must contain at least one letter")
+        return v
 
 class UserCredentialUpdate(BaseModel):
-    username: Optional[str] = None
-    email: Optional[EmailStr] = None
+    email: EmailStr
 
 class UserCredentialOut(BaseModel):
-    id: int
+    # id: int # id is not actually needed to be passed back 
     user_id: int
-    username: str
-    email: str
+    email: str # doesn't matter if you use EmailStr or not
     is_email_verified: bool
     last_login_at: Optional[datetime] = None
 

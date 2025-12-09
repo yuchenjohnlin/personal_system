@@ -84,3 +84,7 @@
   color: #475569;
   font-size: 14px;
 }
+
+.login__hint--error {
+  color: #b91c1c;
+}

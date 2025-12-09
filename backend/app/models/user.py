@@ -33,6 +33,7 @@ class UserProfile(Base):
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False)
     first_name = Column(String, nullable=True)
     last_name = Column(String, nullable=True)
+    username = Column(String, nullable=False) # I will still have a username here, and if this is not specified then maybe use the name
     display_name = Column(String, nullable=True)
     avatar_url = Column(String, nullable=True)
     locale = Column(String, nullable=True)
@@ -45,13 +46,11 @@ class UserProfile(Base):
 class UserCredential(Base):
     __tablename__ = "user_credentials"
     __table_args__ = (
-        UniqueConstraint("username", name="uq_user_credentials_username"),
         UniqueConstraint("email", name="uq_user_credentials_email"),
     )
 
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False)
-    username = Column(String, nullable=False)
     email = Column(String, nullable=False)
     is_email_verified = Column(Boolean, default=False, nullable=False)
     password_hash = Column(String, nullable=False)  # store hashed password only
