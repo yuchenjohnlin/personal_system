@@ -1,0 +1,30 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.so
+*.sqlite
+*.db
+*.db-journal
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Tooling caches
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage.xml
+.hypothesis/
+.benchmarks/
+
+# IDE/Editor
+.idea/
+.vscode/
+
+# Local config
+.env
+.env.*
+!.env.example

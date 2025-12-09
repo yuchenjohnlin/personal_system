@@ -5,12 +5,13 @@ from datetime import datetime
 from app.core.security import hash_password
 from app.core.database import get_db
 from app.models import User, UserCredential, UserProfile
-from app.schemas.user import UserCreate, UserUpdate, UserProfileOut
+from app.schemas.user import UserCreate, UserUpdate, UserOut
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
-@router.post("", response_model=UserProfileOut)
+@router.post("", response_model=UserOut)
 def create_user(payload: UserCreate, db: Session = Depends(get_db)):
+    print("create user : ", payload)
     # Create base user 
     user = User()
     db.add(user)
@@ -24,7 +25,8 @@ def create_user(payload: UserCreate, db: Session = Depends(get_db)):
         user_id=user.id,
         username=payload.credentials.username,
         email=payload.credentials.email,
-        password_hash=hashed_passwd,
+        # password_hash=hashed_passwd,
+        password_hash=payload.credentials.password
     )
     db.add(cred)
 
@@ -41,4 +43,14 @@ def create_user(payload: UserCreate, db: Session = Depends(get_db)):
 
     db.commit()
     db.refresh(user)
+    return user
+
+@router.delete("/{user_id}", response_model=UserOut)
+def delete_user(user_id: int, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    db.delete(user)
+    db.commit()
     return user

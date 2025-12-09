@@ -7,6 +7,7 @@ from .item import Item
 from .product import Product
 from .productname import ProductName
 from .purchase import Purchase
+from .user import User, UserProfile, UserCredential
 
 __all__ = [
     "Base",
@@ -19,4 +20,7 @@ __all__ = [
     "Product",
     "ProductName",
     "Purchase",
+    "User",
+    "UserProfile",
+    "UserCredential",
 ]
