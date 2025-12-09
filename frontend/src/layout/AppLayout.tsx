@@ -3,6 +3,7 @@ import "./AppLayout.css";
 
 const navItems = [
   { label: "Login", to: "/login" },
+  { label: "Register", to: "/register" },
   { label: "Expenses", to: "/expenses" },
 ];
 

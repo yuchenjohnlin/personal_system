@@ -44,3 +44,5 @@ class Detail(Base):
 
     original_unit_price = Column(Numeric(10, 4), nullable=True)
     unit_price = Column(Numeric(10, 4), nullable=True)
+
+    expenses = relationship("Expense", back_populates="detail")

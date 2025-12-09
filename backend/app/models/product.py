@@ -22,3 +22,4 @@ class Product(Base):
     name = relationship("ProductName", back_populates="products")   # a product has many names
     item = relationship("Item", back_populates="products")
     category = relationship("Category", back_populates="products")
+    expenses = relationship("Expense", back_populates="product")

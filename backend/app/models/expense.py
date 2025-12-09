@@ -41,3 +41,8 @@ class Expense(Base):
     detail_id = Column(Integer, ForeignKey("detail.id", ondelete="SET NULL"))
     # if the purchase is deleted, delete all associated expenses
     purchase_id = Column(Integer, ForeignKey("purchases.id", ondelete="CASCADE"), nullable=False)
+
+    # ORM relationships
+    purchase = relationship("Purchase", back_populates="expenses")
+    product = relationship("Product", back_populates="expenses", uselist=False)
+    detail = relationship("Detail", back_populates="expenses", uselist=False)

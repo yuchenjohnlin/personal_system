@@ -1,6 +1,8 @@
-import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import type { FormEvent } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
+import { apiUrl } from "../utils/api";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -8,10 +10,48 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // TODO: Replace with real auth flow once backend is wired.
-    navigate("/expenses");
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const res = await fetch(apiUrl("/auth/login"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: email,
+          password,
+        }),
+      });
+
+      const body = await res.json().catch(() => null);
+
+      if (!res.ok) {
+        const message = body?.detail || body?.message || `Login failed (${res.status})`;
+        console.error("Login failed response:", res.status, body);
+        throw new Error(message);
+      }
+
+      if (!body) {
+        throw new Error("Missing response payload");
+      }
+
+      if (rememberMe) {
+        localStorage.setItem("user_id", String(body.user_id));
+      } else {
+        sessionStorage.setItem("user_id", String(body.user_id));
+      }
+      navigate("/expenses");
+    } catch (err: any) {
+      console.error("Login error:", err);
+      setError(err.message || "Login failed");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -49,8 +89,16 @@ function LoginPage() {
           />
         </label>
         <button type="submit" className="login__button">
-          Continue
+          {isLoading ? "Signing in..." : "Continue"}
         </button>
+        {error && (
+          <p className="login__error">
+            {error}{" "}
+            <Link to="/register" className="login__error-link">
+              Create an account
+            </Link>
+          </p>
+        )}
       </form>
     </div>
   );

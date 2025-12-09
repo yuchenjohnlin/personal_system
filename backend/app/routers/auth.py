@@ -21,6 +21,7 @@ def login(payload: LoginRequest, db: Session = Depends(get_db)):
     cred = db.query(UserCredential).filter(
         UserCredential.username == payload.username
         ).first()
+    print(cred)
     if not cred:
         raise HTTPException(status_code=400, detail="Username not found")
     

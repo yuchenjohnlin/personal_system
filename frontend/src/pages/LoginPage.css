@@ -61,3 +61,26 @@
 .login__button:hover {
   background: #111827;
 }
+
+.login__error {
+  margin: 0;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.login__error a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.login__name-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.login__hint {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+}

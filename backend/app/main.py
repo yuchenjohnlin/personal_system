@@ -6,27 +6,14 @@ from sqlalchemy.orm import Session
 
 from app.core.database import SessionLocal, init_db
 from app.models import Expense, Purchase
+from app.routers import auth, user, expense, purchase
+from app.core.database import get_db
 
 # This schema is not related to the database schema 
 # So there are 2 separated concepts here:
 # 1. Dependencies : Things like db sessions or get_current_user, which are injected 
 # 2. Request / response models: APIs are for people to communicate and use, but have to define the usage interface
 # which are defined as the Pydantic models below
-
-# ---------- Database dependency ----------
-
-# We do this because fastapi's dependency injection system
-# dependency injection is a software design pattern where an object or function receives its dependencies from other sources
-# opens a DB session per request
-# gives it to the route handler
-# closes it after the request is done
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 
 # ---------- App setup ----------
 
@@ -51,3 +38,9 @@ def startup():
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+# Register routers
+app.include_router(auth.router)
+app.include_router(user.router)
+app.include_router(expense.router)
+app.include_router(purchase.router)

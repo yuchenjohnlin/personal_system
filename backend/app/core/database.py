@@ -36,6 +36,21 @@ from sqlalchemy import (
 from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 
 
+# ---------- Database dependency ----------
+
+# We do this because fastapi's dependency injection system
+# dependency injection is a software design pattern where an object or function receives its dependencies from other sources
+# opens a DB session per request
+# gives it to the route handler
+# closes it after the request is done
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+
 def get_engine(url: str = settings.DB_URL):
     if url.startswith("sqlite:///"):
         Path(url.replace("sqlite:///", "")).parent.mkdir(parents=True, exist_ok=True)
