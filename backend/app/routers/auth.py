@@ -9,19 +9,24 @@ from app.schemas.user import UserCreate, UserUpdate, UserOut
 
 from pydantic import BaseModel
 
+import logging
+logger = logging.getLogger(__name__)
+
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 class LoginRequest(BaseModel):
-    username: str
+    email: str
     password: str
 
 @router.post("/login")
 def login(payload: LoginRequest, db: Session = Depends(get_db)):
     # 1. Find by username
+    logger.info("payload", payload)
     cred = db.query(UserCredential).filter(
-        UserCredential.username == payload.username
+        # UserCredential.username == payload.username
+        UserCredential.email == payload.email
         ).first()
-    print(cred)
+    logger.info("cred", cred)
     if not cred:
         raise HTTPException(status_code=400, detail="Username not found")
     
