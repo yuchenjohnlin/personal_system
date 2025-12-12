@@ -8,7 +8,7 @@ from .expense import ExpenseCreate, ExpenseOut
 class PurchaseCreate(BaseModel):
     location: Optional[str] = None
     receipt: Optional[str] = None
-    time: Optional[datetime] = Field(default_factory=datetime.utcnow)
+    purchased_at: datetime
 
     whole_discount_value: Optional[Decimal] = None
     whole_discount_kind: Optional[ValueType] = None
@@ -21,6 +21,7 @@ class PurchaseUpdate(BaseModel):
     location: Optional[str] = None
     receipt: Optional[str] = None
     purchased_at: Optional[datetime] = None
+
     whole_discount_value: Optional[Decimal] = None
     whole_discount_kind: Optional[ValueType] = None
     final_price: Optional[Decimal] = None
@@ -30,7 +31,8 @@ class PurchaseOut(BaseModel):
     id: int
     location: str
     receipt: Optional[str]
-    time: datetime
+    purchased_at: datetime
+
     whole_discount_value: Optional[Decimal]
     whole_discount_kind: Optional[ValueType]
     final_price: Optional[Decimal]

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime
 
-from app.core.database import get_db
+from app.deps.database import get_db
 from app.models import Purchase, Expense
 from app.schemas.purchase import PurchaseCreate, PurchaseUpdate, PurchaseOut
 
@@ -13,7 +13,7 @@ def create_purchase(payload: PurchaseCreate, db: Session = Depends(get_db)):
     purchase = Purchase(
         location=payload.location,
         receipt=payload.receipt,
-        time=payload.purchased_at or datetime.utcnow(),
+        purchased_at=payload.purchased_at,
         whole_discount_value=payload.whole_discount_value,
         whole_discount_kind=payload.whole_discount_kind,
         final_price=payload.final_price,
@@ -57,9 +57,6 @@ def update_purchase(purchase_id: int, payload: PurchaseUpdate, db: Session = Dep
         raise HTTPException(status_code=404, detail="Purchase not found")
 
     data = payload.dict(exclude_unset=True)
-    if "purchased_at" in data:
-        # map to DB field "time"
-        purchase.time = data.pop("purchased_at")
     for field, value in data.items():
         setattr(purchase, field, value)
 

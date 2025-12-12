@@ -1,0 +1,53 @@
+.day-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.day-header__left {
+  display: grid;
+  gap: 4px;
+}
+
+.day-header__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.day-header__date {
+  margin: 0;
+  color: #475569;
+  font-size: 14px;
+}
+
+.day-header__stats {
+  display: flex;
+  gap: 12px;
+}
+
+.day-header__stat {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-width: 120px;
+  display: grid;
+  gap: 4px;
+}
+
+.day-header__stat .label {
+  color: #64748b;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.day-header__stat .value {
+  font-weight: 800;
+  color: #0f172a;
+  font-size: 16px;
+}

@@ -24,7 +24,10 @@ class Purchase(Base):
     id = Column(Integer, primary_key=True, index=True)
     location = Column(String, nullable=False)
     receipt = Column(String, nullable=True)
-    time = Column(DateTime, default=datetime.utcnow)
+    # time = Column(DateTime, default=datetime.utcnow)
+    purchased_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    update_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
     whole_discount_value = Column(Numeric(10, 4), nullable=True)  # store absolute amount or percent fraction (e.g., 0.15)
     whole_discount_kind = Column(

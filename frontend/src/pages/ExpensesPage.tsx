@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import PurchaseList from "../components/PurchaseList";
+import PurchaseList from "../components/purchase/PurchaseList";
 import "./ExpensesPage.css";
 
 type Expense = {

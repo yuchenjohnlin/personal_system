@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from app.core.database import SessionLocal, init_db
 from app.models import Expense, Purchase
 from app.routers import auth, user, expense, purchase
-from app.core.database import get_db
+from app.deps.database import get_db
 
 # This schema is not related to the database schema 
 # So there are 2 separated concepts here:

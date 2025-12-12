@@ -4,6 +4,7 @@ import ExpensesPage from "./pages/ExpensesPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import RegisterPage from "./pages/RegisterPage";
+import TodayPage from "./pages/TodayPage"
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/expenses" element={<ExpensesPage />} />
+        <Route path="/today" element={<TodayPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>

@@ -26,6 +26,7 @@ function LoginPage() {
           email: email,
           password,
         }),
+        credentials: "include", // <-- this sends/receives cookies
       });
 
       const body = await res.json().catch(() => null);

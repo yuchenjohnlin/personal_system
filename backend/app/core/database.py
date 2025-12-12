@@ -43,12 +43,6 @@ from sqlalchemy.orm import declarative_base, relationship, sessionmaker
 # opens a DB session per request
 # gives it to the route handler
 # closes it after the request is done
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 def get_engine(url: str = settings.DB_URL):

@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from datetime import datetime
 
-from app.core.database import get_db
+from app.deps.database import get_db
 from app.models import Purchase, Expense
 from app.schemas.expense import ExpenseOut, ExpenseUpdate, ExpenseCreate
 

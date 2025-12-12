@@ -1,4 +1,5 @@
 from .base import Base
+from datetime import datetime
 from sqlalchemy import (
     Column,
     Integer,
@@ -9,6 +10,7 @@ from sqlalchemy import (
     Float,
     Numeric,
     Enum,
+    DateTime
 )
 from .enum import ValueType
 from sqlalchemy.orm import relationship
@@ -46,3 +48,7 @@ class Expense(Base):
     purchase = relationship("Purchase", back_populates="expenses")
     product = relationship("Product", back_populates="expenses", uselist=False)
     detail = relationship("Detail", back_populates="expenses", uselist=False)
+
+    created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow,
+                        onupdate=datetime.utcnow, nullable=False)

@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from datetime import datetime
 
 from app.core.security import hash_password
-from app.core.database import get_db
+from app.deps.database import get_db
 from app.models import User, UserCredential, UserProfile
 from app.schemas.user import UserCreate, UserUpdate, UserOut
 

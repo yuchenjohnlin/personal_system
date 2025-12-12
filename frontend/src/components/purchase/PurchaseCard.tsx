@@ -1,6 +1,8 @@
 import { useState } from "react";
 import "./PurchaseCard.css";
 
+// purchase card opens when clicking on the card, then shows expense entries. 
+// each purchase should have the amount of money spent, but that could be added afterwards
 export function PurchaseCard({ purchase }: { purchase: any }) {
   const [open, setOpen] = useState(false);
 
