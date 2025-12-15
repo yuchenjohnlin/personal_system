@@ -1,9 +1,14 @@
 import "./AddPurchaseCard.css";
 
-export function AddPurchaseCard({ onAdd }: { onAdd: () => void }) {
+type AddPurchaseCardProps = {
+  onAdd: () => void;
+  disabled?: boolean;
+};
+
+export function AddPurchaseCard({ onAdd, disabled }: AddPurchaseCardProps) {
   return (
-    <button className="add-purchase" onClick={onAdd}>
-        + Add Purchase
+    <button className="add-purchase" onClick={onAdd} disabled={disabled}>
+      + Add Purchase
     </button>
   );
 }

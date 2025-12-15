@@ -13,7 +13,7 @@ class PurchaseCreate(BaseModel):
     whole_discount_value: Optional[Decimal] = None
     whole_discount_kind: Optional[ValueType] = None
 
-    final_price: Optional[Decimal] = None
+    # final_price: Optional[Decimal] = None
     expenses: Optional[List[ExpenseCreate]] = None
 
 
@@ -24,12 +24,12 @@ class PurchaseUpdate(BaseModel):
 
     whole_discount_value: Optional[Decimal] = None
     whole_discount_kind: Optional[ValueType] = None
-    final_price: Optional[Decimal] = None
+    # final_price: Optional[Decimal] = None
 
 
 class PurchaseOut(BaseModel):
     id: int
-    location: str
+    location: Optional[str]
     receipt: Optional[str]
     purchased_at: datetime
 

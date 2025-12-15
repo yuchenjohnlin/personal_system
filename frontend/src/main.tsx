@@ -3,8 +3,10 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "./styles/global.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const root = document.getElementById("root");
+const queryClient = new QueryClient();
 
 if (!root) {
   throw new Error("Root element #root not found");
@@ -12,8 +14,10 @@ if (!root) {
 
 ReactDOM.createRoot(root).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
   </React.StrictMode>
 );

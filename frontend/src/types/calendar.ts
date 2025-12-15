@@ -1,10 +1,9 @@
-export type Purchase = {
-    id: number;
-    location: string;
-    total: number;
-}
+export type CalendarPurchase = {
+  id: number;
+  location: string;
+};
 
 export type CalendarDay = {
-    date: Date;
-    purchases: Purchase[];
-}
+  date: Date;
+  purchases: CalendarPurchase[];
+};
