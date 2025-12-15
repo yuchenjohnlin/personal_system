@@ -1,20 +1,26 @@
 export type PurchaseCreateDTO = {
   location?: string;
   purchased_at: string;
-}
+  whole_discount_value?: number;
+  whole_discount_kind?: "amount" | "percent";
+};
 
 export type PurchaseUpdateDTO = {
   // seems like we still need to add ? 
   location?: string;
   purchased_at?: string;
-}
+  whole_discount_value?: number;
+  whole_discount_kind?: "amount" | "percent";
+};
 
 export type PurchaseReadDTO = {
   id: number;
   location: string;
   purchased_at: string;
   final_price: number;
-  // expenses: ExpenseReadDTO[];
+  whole_discount_value?: number;
+  whole_discount_kind?: "amount" | "percent";
+  expenses?: { id: number; price: number }[];
 };
 
 
