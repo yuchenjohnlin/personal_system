@@ -4,6 +4,7 @@ import "./DayPanel.css";
 import { AddPurchaseCard } from "../purchase/AddPurchaseCard";
 import { PurchaseList } from "../purchase/PurchaseList";
 import type { PurchaseReadDTO, PurchaseCreateDTO, PurchaseUpdateDTO } from "../../api/purchases";
+import type { EditingTarget } from "../../types/types";
 import { useState, useEffect } from "react";
 
 type DayPanelProps = {
@@ -22,7 +23,7 @@ export function DayPanel({
   onDeletePurchase,
   onUpdatePurchase
 }: DayPanelProps) {
-  const [editingId, setEditingId] = useState<number | null>(null);
+  const [editingObj, setEditingObj] = useState<EditingTarget>(null);
   // if don't add the focus new the onblur kind of fights with the newly created autofocuse in the useEffect
   const [focusNewPurchase, setFocusNewPurchase] = useState(false);
 
@@ -31,7 +32,7 @@ export function DayPanel({
     if (!focusNewPurchase) return;
     const unnamed = purchases.find((p) => !p.location); // find the new added purchase where location is empty "" or null
     if (unnamed) {
-      setEditingId(unnamed.id);
+      setEditingObj({type: "purchase", purchaseId: unnamed.id, field: "location"}); // add the location after the new purchase is added 
       setFocusNewPurchase(false);
     }
   }, [purchases]);
@@ -40,7 +41,7 @@ export function DayPanel({
     onAddPurchase({
       purchased_at: format(date, "yyyy-MM-dd"),
     });
-    setEditingId(null);
+    setEditingObj(null);
     // when we add a new purchase we focus it.
     setFocusNewPurchase(true);
   };
@@ -56,11 +57,11 @@ export function DayPanel({
             purchases={purchases}
             onDelete={onDeletePurchase}
             onUpdate={onUpdatePurchase}
-            editingId={editingId}
-            setEditingId={setEditingId}
+            editingObj={editingObj}
+            setEditingObj={setEditingObj}
           />
         )}
-        <AddPurchaseCard onAdd={handleAddPurchase} disabled={editingId !== null} />
+        <AddPurchaseCard onAdd={handleAddPurchase} disabled={editingObj !== null} />
       </div>
     </section>
   );

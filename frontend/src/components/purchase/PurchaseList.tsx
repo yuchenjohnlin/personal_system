@@ -1,20 +1,21 @@
 import { PurchaseCard } from "./PurchaseCard";
 import type { PurchaseReadDTO, PurchaseUpdateDTO } from "../../api/purchases";
 import "./PurchaseList.css";
+import type { EditingTarget } from "../../types/types";
 
 
 export function PurchaseList({
   purchases,
   onDelete,
   onUpdate,
-  editingId,
-  setEditingId,
+  editingObj,
+  setEditingObj,
 }: {
   purchases: PurchaseReadDTO[];
   onDelete: (id: number) => void;
   onUpdate: (id: number, payload: PurchaseUpdateDTO) => void;
-  editingId: number | null;
-  setEditingId: (id: number | null) => void;
+  editingObj: EditingTarget;
+  setEditingObj: (id: EditingTarget) => void;
 }) {
   return (
     <div className="purchase-list">
@@ -24,10 +25,8 @@ export function PurchaseList({
           purchase={p}
           onDelete={onDelete}
           onUpdate={onUpdate}
-          isEditing={editingId === p.id}
-          // for each purchase card, 
-          onStartEditing={() => setEditingId(p.id)}
-          onStopEditing={() => setEditingId(null)}
+          editingObj={editingObj}
+          setEditingObj={setEditingObj}
         />
       ))}
     </div>
