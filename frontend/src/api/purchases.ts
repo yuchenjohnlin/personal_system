@@ -1,8 +1,10 @@
+import type { ValueType } from "../types/types";
+
 export type PurchaseCreateDTO = {
   location?: string;
   purchased_at: string;
   whole_discount_value?: number;
-  whole_discount_kind?: "amount" | "percent";
+  whole_discount_kind?: ValueType;
 };
 
 export type PurchaseUpdateDTO = {
@@ -10,7 +12,7 @@ export type PurchaseUpdateDTO = {
   location?: string;
   purchased_at?: string;
   whole_discount_value?: number;
-  whole_discount_kind?: "amount" | "percent";
+  whole_discount_kind?: ValueType;
 };
 
 export type PurchaseReadDTO = {
@@ -19,7 +21,7 @@ export type PurchaseReadDTO = {
   purchased_at: string;
   final_price: number;
   whole_discount_value?: number;
-  whole_discount_kind?: "amount" | "percent";
+  whole_discount_kind?: ValueType;
   expenses?: { id: number; price: number }[];
 };
 

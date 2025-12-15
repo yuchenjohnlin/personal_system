@@ -66,3 +66,7 @@ export function DayPanel({
   );
 }
 // not sure if the disabled is needed because I think it works without it.
+// if I have the disabled, then when the onStopEditing is not used 
+// the editingID is not set to null and then I can't add a new purchase, because the hook didn't have the onStopeEditing at first.
+// but if you remove the disabled it doesn't seem to have a large problem. but it doesn't finish the edit function properly I guess
+// so we still need the stopEditing to set it to null, which is done by overriding the bind in the purchase card
