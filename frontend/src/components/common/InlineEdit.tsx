@@ -23,7 +23,7 @@ type InlineEditProps<T extends string | number = string> = {
   renderDisplay?: (value: T) => React.ReactNode;
   // Core Idea : 
   // Behavior lives in InlineEdit 
-  // Appearance lives in the parent via renderDisplay
+  // Appearance lives in the parent via renderDisplay - renderDisplay is kind of like a prop
 };
 
 

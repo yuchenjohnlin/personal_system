@@ -2,3 +2,14 @@
   display: grid;
   gap: 12px;
 }
+
+.purchase-list__header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 6px 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+}

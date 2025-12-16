@@ -19,6 +19,10 @@ export function PurchaseList({
 }) {
   return (
     <div className="purchase-list">
+      <div className="purchase-list__header">
+        <span>Purchase</span>
+        <span>Whole Discount / Total</span>
+      </div>
       {purchases.map((p) => (
         <PurchaseCard
           key={p.id}

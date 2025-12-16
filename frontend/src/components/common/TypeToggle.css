@@ -1,0 +1,24 @@
+.value-type-toggle {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.value-type-toggle button {
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.value-type-toggle button.active {
+  background: #111;
+  color: white;
+  border-color: #111;
+}
+
+.value-type-toggle.is-disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}

@@ -4,6 +4,7 @@ import type { PurchaseUpdateDTO, PurchaseReadDTO } from "../../api/purchases";
 import { useAutosaveField } from "../../hooks/useAutoSaveField";
 import type { EditingTarget } from "../../types/types";
 import { InlineEdit } from "../common/InlineEdit";
+import { TypeToggle } from "../common/TypeToggle";
 
 type PurchaseCardProps = {
   purchase: PurchaseReadDTO;
@@ -64,45 +65,95 @@ export function PurchaseCard({
     (sum: number, e: any) => sum + Number(e.price),
     0
   );
+  const expenseCount = purchase.expenses?.length ?? 0;
+  const previewText =
+    expenseCount > 0 ? `${expenseCount} item${expenseCount > 1 ? "s" : ""}` : "No expenses";
+
 
   return (
     <div className="purchase-card">
-      <div className="purchase-card__header" onClick={() => setOpen((o) => !o)}>
-        <InlineEdit
-          value={location.draft}
-          isEditing={isEditingLocation}
-          placeholder="Enter Location"
-          className="purchase-card__location"
-          onStartEditing={() =>
-            setEditingObj({
-              type: "purchase",
-              purchaseId: purchase.id,
-              field: "location",
-            })
-          }
-          onStopEditing={() => setEditingObj(null)}
-          autosave={location}
-          renderDisplay={(loc) => (
-            <span className="purchase-location">
-              {loc || "Untitled Purchase"}
-            </span>
-          )}
-        />
-
-
-        <div className="purchase-card__header-right">
-          <span className="purchase-card__total">${total.toFixed(2)}</span>
-          {/* To add whole discount input */}
+      <div className="purchase-card__row">
+        <div className="purchase-card__zone purchase-card__zone--left">
+          <InlineEdit
+            value={location.draft}
+            isEditing={isEditingLocation}
+            placeholder="Enter Location"
+            className="purchase-card__location"
+            onStartEditing={() =>
+              setEditingObj({
+                type: "purchase",
+                purchaseId: purchase.id,
+                field: "location",
+              })
+            }
+            onStopEditing={() => setEditingObj(null)}
+            autosave={location}
+            renderDisplay={(loc) => (
+              <span className="purchase-location">
+                {loc || "Untitled Purchase"}
+              </span>
+            )}
+          />
           <button
-            className="purchase-card__delete"
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete(purchase.id);
-            }}
-            aria-label="Delete purchase"
+            className="purchase-card__preview-pill"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? "Collapse purchase" : "Expand purchase"}
           >
-            ✕
+            <span className="purchase-card__preview">{previewText}</span>
+            <span className="purchase-card__expand">{open ? "▴" : "▾"}</span>
           </button>
+        </div>
+
+        <div className="purchase-card__zone purchase-card__zone--right">
+          <div className="purchase-card__summary">
+            <div className="purchase-card__chip purchase-card__chip--discount">
+              <span className="purchase-card__chip-label">Whole Discount</span>
+              <InlineEdit
+                value={wholeDiscountValue.draft}
+                isEditing={isEditingWholeDiscount}
+                placeholder="0"
+                className="purchase-card__chip-value"
+                onStartEditing={() =>
+                  setEditingObj({
+                    type: "purchase",
+                    purchaseId: purchase.id,
+                    field: "whole_discount_value",
+                  })
+                }
+                onStopEditing={() => setEditingObj(null)}
+                autosave={wholeDiscountValue}
+                renderDisplay={(discount) => (
+                  <span className="purchase-card__chip-display">
+                    {discount || "—"}
+                  </span>
+                )}
+              />
+              <TypeToggle
+                value={purchase.whole_discount_kind ?? "amount"}
+                onChange={(next) => onUpdate(purchase.id, {whole_discount_kind: next})}
+                options={[
+                  { value: "amount", label: "$" },
+                  { value: "percent", label: "%" },
+                ]}
+              />
+            </div>
+            <div className="purchase-card__chip purchase-card__chip--total">
+              <span className="purchase-card__chip-label">Total</span>
+              <span className="purchase-card__chip-value">${total.toFixed(2)}</span>
+            </div>
+          </div>
+          <div className="purchase-card__actions">
+            <button
+              className="purchase-card__delete"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(purchase.id);
+              }}
+              aria-label="Delete purchase"
+            >
+              ✕
+            </button>
+          </div>
         </div>
       </div>
 
