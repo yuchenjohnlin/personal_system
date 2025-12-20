@@ -5,6 +5,8 @@ import { debounce } from "lodash-es";
 type UseAutosaveFieldOptions<T> = {
   value: T;
   onSave: (value: T) => void | Promise<void>;
+  parse?: (draft: string) => T | null;
+  format?: (value: T) => string;
   isEditing?: boolean;
   debounceMs?: number;
 };
@@ -12,24 +14,28 @@ type UseAutosaveFieldOptions<T> = {
 export function useAutosaveField<T>({
   value,
   onSave,
+  parse = (s) => s as unknown as T, // convert what user typed into a valid domain value or reject it
+  format = (v) => String(v), // converts the value to something the user can see and edit
   isEditing = true,
   debounceMs = 400,
 }: UseAutosaveFieldOptions<T>) {
-  const [draft, setDraft] = useState<T>(value);
+  const [draft, setDraft] = useState<string>(format(value));
 
   // debounce save to avoid spamming API
   // Create debounced save ONCE
-  const debouncedSaveRef = useRef(
-    debounce((v: T) => {
-      onSave(v);
+  const debouncedSave = useRef(
+    debounce((nextDraft: string) => {
+      const parsed = parse(nextDraft);
+      if (parsed !== null) {
+        onSave(parsed);
+      }
     }, debounceMs)
-  );
+  ).current;
 
-  const debouncedSave = debouncedSaveRef.current;
 
   useEffect(() => {
-    if (!isEditing) setDraft(value);
-  }, [value]);
+    if (!isEditing) setDraft(format(value));
+  }, [value, isEditing, format]);
 
   /**
    * 2. Trigger debounced save when draft changes
@@ -54,7 +60,7 @@ export function useAutosaveField<T>({
 
   const cancel = () => {
     debouncedSave.cancel();
-    setDraft(value);
+    setDraft(format(value));
   };
 
   /**
@@ -85,4 +91,26 @@ export function useAutosaveField<T>({
     cancel,
     bind,
   };
+}
+
+
+export function useNumericAutosave({
+  value,
+  onSave,
+  isEditing = true,
+}: {
+  value: number | null | undefined;
+  onSave: (n: number) => void;
+  isEditing?: boolean;
+}) {
+  return useAutosaveField<number>({
+    value: Number(value ?? 0),
+    onSave,
+    parse: (s) => {
+      const n = Number(s);
+      return Number.isNaN(n) ? null : n;
+    },
+    format: (n) => Number(n ?? 0).toFixed(2),
+    isEditing,
+  });
 }

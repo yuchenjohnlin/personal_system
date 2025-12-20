@@ -49,3 +49,13 @@ def update_expense(expense_id: int, payload: ExpenseUpdate, db: Session = Depend
     db.commit()
     db.refresh(expense)
     return expense
+
+
+@router.delete("/{expense_id}", response_model=ExpenseOut)
+def delete_expense(expense_id: int, db: Session = Depends(get_db)):
+    expense = db.query(Expense).filter(Expense.id == expense_id).first()
+    if not expense:
+        raise HTTPException(status_code=404, detail="Expense not found")
+    db.delete(expense)
+    db.commit()
+    return expense

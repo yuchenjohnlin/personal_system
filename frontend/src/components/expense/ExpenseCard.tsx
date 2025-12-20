@@ -1,5 +1,5 @@
 import type { ExpenseReadDTO, ExpenseUpdateDTO } from "../../api/expenses";
-import { useAutosaveField } from "../../hooks/useAutoSaveField";
+import { useAutosaveField, useNumericAutosave} from "../../hooks/useAutoSaveField";
 import type { EditingTarget } from "../../types/types";
 import { InlineEdit } from "../common/InlineEdit";
 import { TypeToggle } from "../common/TypeToggle";
@@ -50,19 +50,20 @@ export function ExpenseCard({
     editingObj?.expenseId === expense.id &&
     editingObj?.field === "user_label";
 
-  const price = useAutosaveField<number>({
+
+  const price = useNumericAutosave({
     value: expense.price ?? 0,
     onSave: (price) => onUpdateExpense(expense.id, { price }),
     isEditing: isEditingPrice
-  });
+  })
 
-  const tax = useAutosaveField<number>({
+  const tax = useNumericAutosave({
     value: expense.tax_value ?? 0,
     onSave: (tax) => onUpdateExpense(expense.id, { tax_value: tax }),
     isEditing: isEditingTax
   });
 
-  const tip = useAutosaveField<number>({
+  const tip = useNumericAutosave({
     value: expense.tip_value ?? 0,
     onSave: (tip) => onUpdateExpense(expense.id, { tip_value: tip }),
     isEditing: isEditingTip
