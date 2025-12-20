@@ -6,14 +6,15 @@ import type { EditingTarget } from "../../types/types";
 
 export function PurchaseList({
   purchases,
-  onDelete,
-  onUpdate,
+  onDeletePurchase,
+  onUpdatePurchase,
   editingObj,
   setEditingObj,
 }: {
   purchases: PurchaseReadDTO[];
-  onDelete: (id: number) => void;
-  onUpdate: (id: number, payload: PurchaseUpdateDTO) => void;
+  onDeletePurchase: (id: number) => void;
+  onUpdatePurchase: (id: number, payload: PurchaseUpdateDTO) => void;
+  
   editingObj: EditingTarget;
   setEditingObj: (id: EditingTarget) => void;
 }) {
@@ -27,8 +28,8 @@ export function PurchaseList({
         <PurchaseCard
           key={p.id}
           purchase={p}
-          onDelete={onDelete}
-          onUpdate={onUpdate}
+          onDeletePurchase={onDeletePurchase}
+          onUpdatePurchase={onUpdatePurchase}
           editingObj={editingObj}
           setEditingObj={setEditingObj}
         />

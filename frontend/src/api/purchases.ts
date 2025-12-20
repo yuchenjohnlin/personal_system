@@ -1,10 +1,8 @@
 import type { ValueType } from "../types/types";
+import type { ExpenseReadDTO } from "./expenses";
 
 export type PurchaseCreateDTO = {
-  location?: string;
   purchased_at: string;
-  whole_discount_value?: number;
-  whole_discount_kind?: ValueType;
 };
 
 export type PurchaseUpdateDTO = {
@@ -22,7 +20,7 @@ export type PurchaseReadDTO = {
   final_price: number;
   whole_discount_value?: number;
   whole_discount_kind?: ValueType;
-  expenses?: { id: number; price: number }[];
+  expenses?: ExpenseReadDTO[];
 };
 
 

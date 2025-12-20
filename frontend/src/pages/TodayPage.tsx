@@ -12,7 +12,7 @@ export function TodayPage() {
   const { purchases, isLoading, isError, addPurchase, deletePurchase, updatePurchase } =
     usePurchasesForDate(isoDate);
 
-  // Because the backend column is Numeric, SQLAlchemy + FastAPI/Pydantic serialize it as Decimal (or JSON-encode as a string) to avoid floating-point issues. When it hits the frontend, final_price isn’t a JS number by default—it’s either serialized as a string or treated as a Decimal-like value—so arithmetic yields strings unless you coerce
+    // Because the backend column is Numeric, SQLAlchemy + FastAPI/Pydantic serialize it as Decimal (or JSON-encode as a string) to avoid floating-point issues. When it hits the frontend, final_price isn’t a JS number by default—it’s either serialized as a string or treated as a Decimal-like value—so arithmetic yields strings unless you coerce
   const totalSpent = purchases.reduce(
     (sum, p) => sum + Number(p.final_price ?? 0),
     0

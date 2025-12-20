@@ -8,7 +8,8 @@ from .detail import DetailOut
 
 class ExpenseCreate(BaseModel):
     
-    price: Decimal
+    price: Optional[Decimal] = None
+    user_label: Optional[str] = None
 
     tax_value: Optional[Decimal] = None
     tax_kind: Optional[ValueType] = None
@@ -23,6 +24,7 @@ class ExpenseUpdate(BaseModel):
     # um anyways, chatgpt says that the id field should be inclueded in the url 
     # so it doesn't need to be in the payload
     price: Optional[Decimal] = None
+    user_label: Optional[str] = None
 
     tax_value: Optional[Decimal] = None
     tax_kind: Optional[ValueType] = None
@@ -36,7 +38,8 @@ class ExpenseUpdate(BaseModel):
 class ExpenseOut(BaseModel):
     id: int
     purchase_id: int
-    price: Decimal
+    price: Optional[Decimal] = None
+    user_label: Optional[str] = None
     tax_value: Optional[Decimal] = None
     tax_kind: Optional[ValueType] = None
 

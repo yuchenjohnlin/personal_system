@@ -21,7 +21,7 @@ export function DayPanel({
   purchases,
   onAddPurchase,
   onDeletePurchase,
-  onUpdatePurchase
+  onUpdatePurchase,
 }: DayPanelProps) {
   const [editingObj, setEditingObj] = useState<EditingTarget>(null);
   // if don't add the focus new the onblur kind of fights with the newly created autofocuse in the useEffect
@@ -55,8 +55,9 @@ export function DayPanel({
         ) : (
           <PurchaseList
             purchases={purchases}
-            onDelete={onDeletePurchase}
-            onUpdate={onUpdatePurchase}
+            onDeletePurchase={onDeletePurchase}
+            onUpdatePurchase={onUpdatePurchase}
+
             editingObj={editingObj}
             setEditingObj={setEditingObj}
           />

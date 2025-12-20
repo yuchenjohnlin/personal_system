@@ -23,7 +23,8 @@ class Expense(Base):
     )
 
     id = Column(Integer, primary_key=True, index=True)
-    price = Column(Numeric(10, 4), nullable=False)
+    price = Column(Numeric(10, 4), nullable=True)
+    user_label = Column(String, nullable=True)
 
     # Tax 
     tax_value = Column(Numeric(10, 4))  
@@ -38,6 +39,7 @@ class Expense(Base):
         Enum(ValueType, name="tip_kind"),
         nullable=True,
     )
+    user_label = Column(String, nullable=True)
     
     product_id = Column(Integer, ForeignKey("product.id", ondelete="SET NULL"), nullable=True)
     detail_id = Column(Integer, ForeignKey("detail.id", ondelete="SET NULL"))
