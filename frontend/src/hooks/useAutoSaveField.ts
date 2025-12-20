@@ -98,19 +98,35 @@ export function useNumericAutosave({
   value,
   onSave,
   isEditing = true,
+  decimals = 2,
 }: {
-  value: number | null | undefined;
-  onSave: (n: number) => void;
+  value: number | null | string | undefined;
+  onSave: (n: number | null) => void; // null can be in the database
   isEditing?: boolean;
+  decimals?: number;
 }) {
-  return useAutosaveField<number>({
-    value: Number(value ?? 0),
+
+  const normalizedValue = (() => {
+    if (value === null || value === undefined || value === "") return null;
+    const n = Number(value);
+    return Number.isNaN(n) ? null : n;
+  })();
+
+  return useAutosaveField<number | null>({
+    value: normalizedValue,
     onSave,
     parse: (s) => {
+      if (s.trim() === "") return null;
+
       const n = Number(s);
-      return Number.isNaN(n) ? null : n;
+      if (Number.isNaN(n)) return null;
+
+      return n;
     },
-    format: (n) => Number(n ?? 0).toFixed(2),
+    format: (n) => {
+      if (n === null || Number.isNaN(Number(n))) return "";
+      return Number(n).toFixed(decimals);
+    },
     isEditing,
   });
 }

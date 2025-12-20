@@ -2,24 +2,27 @@ import type { ValueType } from "../types/types";
 import type { ExpenseReadDTO } from "./expenses";
 
 export type PurchaseCreateDTO = {
+  location?: string | null;
   purchased_at: string;
+  whole_discount_value?: number | null;
+  whole_discount_kind?: ValueType | null;
 };
 
 export type PurchaseUpdateDTO = {
   // seems like we still need to add ? 
-  location?: string;
+  location?: string | null;
   purchased_at?: string;
-  whole_discount_value?: number;
-  whole_discount_kind?: ValueType;
+  whole_discount_value?: number | null;
+  whole_discount_kind?: ValueType | null;
 };
 
 export type PurchaseReadDTO = {
   id: number;
-  location: string;
+  location: string | null;
   purchased_at: string;
-  final_price: number;
-  whole_discount_value?: number;
-  whole_discount_kind?: ValueType;
+  final_price: number | null;
+  whole_discount_value?: number | null;
+  whole_discount_kind?: ValueType | null;
   expenses?: ExpenseReadDTO[];
 };
 

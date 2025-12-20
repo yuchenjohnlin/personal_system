@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "./PurchaseCard.css";
 import type { PurchaseUpdateDTO, PurchaseReadDTO } from "../../api/purchases";
-import { useAutosaveField } from "../../hooks/useAutoSaveField";
+import { useAutosaveField, useNumericAutosave } from "../../hooks/useAutoSaveField";
 import type { EditingTarget } from "../../types/types";
 import { InlineEdit } from "../common/InlineEdit";
 import { TypeToggle } from "../common/TypeToggle";
@@ -59,11 +59,11 @@ export function PurchaseCard({
     isEditing: isEditingLocation
   });
 
-  const wholeDiscountValue = useAutosaveField<number>({
+  const wholeDiscountValue = useNumericAutosave({
     value: purchase.whole_discount_value ?? 0,
     onSave: (discount) => onUpdatePurchase(purchase.id, { whole_discount_value: discount }),
     isEditing: isEditingWholeDiscount
-  });
+  })
 
 
   // metadata to display stats for the purchase

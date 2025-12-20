@@ -14,13 +14,13 @@ export type ProductDTO = {
 };
 
 export type ExpenseCreateDTO = {
-  price?: number;
-  user_label?: string;
-  tax_value?: number;
-  tax_kind?: ValueType;
-  tip_value?: number;
-  tip_kind?: ValueType;
-  product_id?: number;
+  price?: number | null;
+  user_label?: string | null;
+  tax_value?: number | null;
+  tax_kind?: ValueType | null;
+  tip_value?: number | null;
+  tip_kind?: ValueType | null;
+  product_id?: number | null;
   // detail intentionally omitted for now
 };
 
@@ -29,14 +29,13 @@ export type ExpenseUpdateDTO = Partial<ExpenseCreateDTO>;
 export type ExpenseReadDTO = {
   id: number;
   purchase_id: number;
-  price: number;
-  user_label?: string;
-
-  tax_value?: number;
-  tax_kind?: ValueType;
-  tip_value?: number;
-  tip_kind?: ValueType;
-  product_id?: number;
+  price: number | null;
+  user_label?: string | null;
+  tax_value?: number | null;
+  tax_kind?: ValueType | null;
+  tip_value?: number | null;
+  tip_kind?: ValueType | null;
+  product_id?: number | null;
   product?: ProductDTO;
   // detail fields can be added when needed
 };
